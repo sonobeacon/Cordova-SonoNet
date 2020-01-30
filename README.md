@@ -2,21 +2,35 @@
 
 ## Information
 
-This repository provides installation instructions for the [Sonobeacon Cordova-plugin](https://github.com/sonobeacon/SonoNet-Cordova-Plugin) and a sample app for more details on how to integrate the plugin in your app.
+This repository provides installation instructions for the Sonobeacon Cordova plugin and a sample app for more details on how to integrate the plugin in your app.
 
 We will provide you with the neccassary framework and apiKey that you need to use this plugin.
 
 ## Installation
 
-Add the plugin to your existing cordova app
+Before adding the plugin to your app, you need to integrade the libraries we have given you like below:
+
+### iOS
+
+Paste the sonolib.framework folder under ~/Plugin/src/ios/
+
+### Android
+
+Paste the SonoNet-SDK-4.2.aar file under ~/Plugin/src/android
+
+## Add the plugin to your existing cordova app
+
+via npm
 ```
-cordova plugin add sononetplugin //not working yet, coming soon
+npm install sononetplugin //not working yet, coming soon
 ```
-Or clone the [Github Repo](https://github.com/sonobeacon/SonoNet-Cordova-Plugin) and add it locally:
+Or clone the this repository and add it locally:
 ```
-cordova plugin add /* yourPluginDirectoryHere */
+cordova plugin add ../plugin/
 ```
-provided it is in the same parent folder.
+
+
+
 
 ### Call the Plugin from your index.js
 ```javascript
@@ -90,7 +104,7 @@ apply plugin: 'kotlin-android-extensions'
 Still in your app-level build.gradle, add the following dependencies:
 ```gradle
 dependencies {
-	implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'org.altbeacon:android-beacon-library:2.15.1'
