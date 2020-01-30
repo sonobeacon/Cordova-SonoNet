@@ -120,6 +120,12 @@ dependencies {
 }
 ```
 
+In your gradle.properties, add these two lines:
+```gradle
+android.useAndroidX=true
+android.enableJetifier=true
+```
+
 You also need to modify your AndroidManifest file by adding following permissions and service:
 ```xml
 <manifest>

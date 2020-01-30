@@ -1,7 +1,7 @@
 {
   "name": "cordova-plugin-sononetplugin",
-  "version": "0.0.1",
-  "description": "text",
+  "version": "1.0.0",
+  "description": "Location based services with SonoNet",
   "cordova": {
     "id": "cordova-plugin-sononetplugin",
     "platforms": [
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/sonobeacon/Cordova-SonoNet"
   },
   "keywords": [
     "ecosystem:cordova",
@@ -19,5 +19,5 @@
     "cordova-ios"
   ],
   "author": "SonoBeacon GmbH",
-  "license": ""
+  "license": "Apache 2.0"
 }
