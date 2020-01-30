@@ -1,0 +1,23 @@
+{
+  "name": "cordova-plugin-sononetplugin",
+  "version": "0.0.1",
+  "description": "text",
+  "cordova": {
+    "id": "cordova-plugin-sononetplugin",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "author": "SonoBeacon GmbH",
+  "license": ""
+}

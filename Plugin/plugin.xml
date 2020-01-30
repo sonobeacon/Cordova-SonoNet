@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-sononetplugin" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>SonoNetPlugin</name>
+    <js-module name="SonoNetPlugin" src="www/SonoNetPlugin.js">
+        <clobbers target="cordova.plugins.SonoNetPlugin" />
+    </js-module>
+
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="SonoNetPlugin">
+                <param name="android-package" value="com.sonobeacon.cordova.plugin.SonoNetPlugin"/>
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml" />
+        <source-file src="src/android/SonoNetPlugin.java" target-dir="src/com/sonobeacon/cordova/plugin/SonoNetPlugin"/>
+        <framework src="src/android/myGradle.gradle" custom="true" type="gradleReference" />
+        <resource-file src="src/android/SonoNet-SDK-4.2.aar" target="libs/SonoNet-SDK-4.2.aar" />
+    </platform>
+
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="SonoNetPlugin">
+                <param name="ios-package" value="SonoNetPlugin" />
+            </feature>
+
+        </config-file>
+        <config-file target="*-Info.plist" parent="NSMicrophoneUsageDescription">
+            <string> Das Mikrofon wird benötigt um Audio-Notizen aufzeichnen zu können um diese mit Freunden und Bekannten zu teilen. Zudem ermöglicht die Mikrofonnutzung das Ausspielen von zur jeweiligen Situation passenden Text-, Bild- und Video-Inhalten. </string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NSBluetoothPeripheralUsageDescription">
+            <string> Bluetooth ermöglicht die Bestimmung der Umgebung. </string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NSBluetoothAlwaysUsageDescription">
+            <string> Bluetooth ermöglicht die Bestimmung der Umgebung. </string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NSLocationAlwaysAndWhenInUseUsageDescription">
+            <string> Die Ortsbestimmung ermöglicht es, die Umgebung besser festzulegen. </string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NSLocationAlwaysUsageDescription">
+            <string> Die Ortsbestimmung ermöglicht es, die Umgebung besser festzulegen. </string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+            <string> Die Ortsbestimmung ermöglicht es, die Umgebung besser festzulegen. </string>
+        </config-file>
+
+        <source-file src="src/ios/SonoNetPlugin.swift" />
+
+       
+        <framework src="src/ios/sonolib.framework" embed="true" custom="true" />
+        <source-file src="src/ios/sonolib.framework" target-dir="lib" framework="true" />
+        <!-- Background modes -->
+        <config-file target="*-Info.plist" parent="UIBackgroundModes">
+            <array>
+                <string>location</string>
+            </array>
+        </config-file>
+    </platform>
+</plugin>

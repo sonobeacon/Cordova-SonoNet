@@ -1,0 +1,14 @@
+#!/bin/bash
+
+cordova plugin remove cordova-plugin-sononetplugin
+
+cordova plugin add ../plugin/
+
+echo "Select run platform"
+select yn in "iOS" "Android" "Cancel"; do
+    case $yn in
+        iOS ) cordova run ios; break;;
+        Android ) cordova run android; break;;
+		Cancel ) break;;
+    esac
+done
