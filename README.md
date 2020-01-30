@@ -4,6 +4,8 @@
 
 This repository provides installation instructions for the [Sonobeacon Cordova-plugin](https://github.com/sonobeacon/SonoNet-Cordova-Plugin) and a sample app for more details on how to integrate the plugin in your app.
 
+We will provide you with the neccassary framework and apiKey that you need to use this plugin.
+
 ## Installation
 
 Add the plugin to your existing cordova app
