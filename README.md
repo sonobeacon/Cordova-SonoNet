@@ -112,7 +112,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation "androidx.core:core-ktx:1.0.1"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
     // SUB-PROJECT DEPENDENCIES START
     ..
     // SUB-PROJECT DEPENDENCIES END
