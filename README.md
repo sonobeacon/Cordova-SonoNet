@@ -4,23 +4,14 @@
 
 This repository provides installation instructions for the Sonobeacon Cordova plugin and a sample app for more details on how to integrate the plugin in your app.
 
-We will provide you with the neccassary framework and apiKey that you need to use this plugin.
+We will provide you with the apiKey that you need to use this plugin.
 
 ## Installation
 
-Before adding the plugin to your app, you need to integrade the libraries we have given you like below:
 
-### iOS
+Add the plugin to your existing cordova app
 
-Paste the sonolib.framework folder under ~/Plugin/src/ios/
-
-### Android
-
-Paste the SonoNet-SDK-4.2.aar file under ~/Plugin/src/android
-
-## Add the plugin to your existing cordova app
-
-via npm
+via npm:
 ```
 npm install sononetplugin //not working yet, coming soon
 ```
@@ -30,10 +21,9 @@ cordova plugin add ../plugin/
 ```
 
 
-
-
 ### Call the Plugin from your index.js
 ```javascript
+//Example: cordova.plugins.SonoNetPlugin.initialize("1234", null, true, true, ... 
 cordova.plugins.SonoNetPlugin.initialize("ApiKey", "locationId", "debugMode", "receiveNotification", 
         function(response){
             console.log(response);
@@ -49,12 +39,12 @@ cordova.plugins.SonoNetPlugin.initialize("ApiKey", "locationId", "debugMode", "r
 
 | Parameter            | type    | explanation                                               |
 |----------------------|---------|-----------------------------------------------------------|
-| ApiKey               | String  | your apiKey                                               |
-| locationId           | String  | your locationId                                           |
+| ApiKey               | String  | your apiKey (mandatory)                                   |
+| locationId           | String  | your locationId (optional)                                |
 | debugMode            | boolean | whether you want the api to put out debugging information |
 | reveiceNotifications | boolean | whether you want to receive notifications from geofences  |
 
-Within the *response* function, process the obtained data according to your needs. The Object *response* is a JSON object containing the id, title and url of the beacon that was just detected.
+Within the *response* function, process the obtained data according to your needs. The object *response* is a JSON containing the id, title and url of the beacon that was just detected.
 
 ## Platform configuration to proper integrate the plugin
 
@@ -104,6 +94,7 @@ apply plugin: 'kotlin-android-extensions'
 Still in your app-level build.gradle, add the following dependencies:
 ```gradle
 dependencies {
+    // SUB-PROJECT DEPENDENCIES START
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.0.0'
@@ -112,7 +103,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation "androidx.core:core-ktx:1.0.1"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    // SUB-PROJECT DEPENDENCIES START
     ..
     // SUB-PROJECT DEPENDENCIES END
     
