@@ -94,7 +94,6 @@ apply plugin: 'kotlin-android-extensions'
 Still in your app-level build.gradle, add the following dependencies:
 ```gradle
 dependencies {
-    // SUB-PROJECT DEPENDENCIES START
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.0.0'
@@ -103,6 +102,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation "androidx.core:core-ktx:1.0.1"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // SUB-PROJECT DEPENDENCIES START
     ..
     // SUB-PROJECT DEPENDENCIES END
     
