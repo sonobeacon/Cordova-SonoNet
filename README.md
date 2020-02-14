@@ -9,17 +9,12 @@ We will provide you with the apiKey that you need to use this plugin.
 ## Installation
 
 
-Add the plugin to your existing cordova app
+After we've provided you with the plugin, simply add the plugin to your existing cordova app
 
-via npm:
-```
-npm install sononetplugin //not working yet, coming soon
-```
-Or clone the this repository and add it locally:
 ```
 cordova plugin add ../plugin/
 ```
-
+where '../plugin/' is the relative path from your app to the plugin's location.
 
 ### Call the Plugin from your index.js
 ```javascript
