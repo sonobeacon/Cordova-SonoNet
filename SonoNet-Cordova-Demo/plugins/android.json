@@ -8,7 +8,10 @@
   },
   "installed_plugins": {
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.sonobeacon.sampleApp"
+      "PACKAGE_NAME": "com.sonobeacon.cordova.sampleapp"
+    },
+    "cordova-plugin-sononetplugin": {
+      "PACKAGE_NAME": "com.sonobeacon.cordova.sampleapp"
     }
   },
   "dependent_plugins": {}

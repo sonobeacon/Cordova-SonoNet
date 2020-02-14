@@ -115,17 +115,10 @@ android.useAndroidX=true
 android.enableJetifier=true
 ```
 
-You also need to modify your AndroidManifest file by adding following permissions and service:
+You also need to modify your AndroidManifest file by adding following service and receiver, v1.1.0 adds the needed permissions automatically:
 ```xml
 <manifest>
 	...
-  <uses-permission android:name="android.permission.RECORD_AUDIO" />
-  <uses-permission android:name="android.permission.INTERNET" />
-  <uses-permission android:name="android.permission.BLUETOOTH" />
-  <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-  ...
   <application>
     ...
     <service android:label="dacDetect" android:name="com.sonobeacon.system.sonolib.BeaconInfoService" />

@@ -93,7 +93,7 @@ class SonoNetPlugin: CDVPlugin {
         extension SonoNetPlugin: CLLocationManagerDelegate {
 
             func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion) {
-               // if UIApplication.shared.applicationState != .active && state == .inside { SonoNet.shared.sendNotification(withIdentifier: region.identifier) }
+                //if UIApplication.shared.applicationState != .active && state == .inside { SonoNet.shared.sendNotification(withIdentifier: region.identifier) }
             }
 
             func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {

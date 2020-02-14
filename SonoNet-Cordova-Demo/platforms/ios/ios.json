@@ -7,18 +7,58 @@
     "files": {
       "config.xml": {
         "parents": {
-          "/*": []
+          "/*": [
+            {
+              "xml": "<feature name=\"SonoNetPlugin\"><param name=\"ios-package\" value=\"SonoNetPlugin\" /></feature>",
+              "count": 1
+            }
+          ]
         }
       },
       "*-Info.plist": {
         "parents": {
-          "NSMicrophoneUsageDescription": [],
-          "NSBluetoothPeripheralUsageDescription": [],
-          "NSBluetoothAlwaysUsageDescription": [],
-          "NSLocationAlwaysAndWhenInUseUsageDescription": [],
-          "NSLocationAlwaysUsageDescription": [],
-          "NSLocationWhenInUseUsageDescription": [],
-          "UIBackgroundModes": []
+          "NSMicrophoneUsageDescription": [
+            {
+              "xml": "<string> Das Mikrofon wird benötigt um Audio-Notizen aufzeichnen zu können um diese mit Freunden und Bekannten zu teilen. Zudem ermöglicht die Mikrofonnutzung das Ausspielen von zur jeweiligen Situation passenden Text-, Bild- und Video-Inhalten. </string>",
+              "count": 1
+            }
+          ],
+          "NSBluetoothPeripheralUsageDescription": [
+            {
+              "xml": "<string> Bluetooth ermöglicht die Bestimmung der Umgebung. </string>",
+              "count": 1
+            }
+          ],
+          "NSBluetoothAlwaysUsageDescription": [
+            {
+              "xml": "<string> Bluetooth ermöglicht die Bestimmung der Umgebung. </string>",
+              "count": 1
+            }
+          ],
+          "NSLocationAlwaysAndWhenInUseUsageDescription": [
+            {
+              "xml": "<string> Die Ortsbestimmung ermöglicht es, die Umgebung besser festzulegen. </string>",
+              "count": 1
+            }
+          ],
+          "NSLocationAlwaysUsageDescription": [
+            {
+              "xml": "<string> Die Ortsbestimmung ermöglicht es, die Umgebung besser festzulegen. </string>",
+              "count": 1
+            }
+          ],
+          "NSLocationWhenInUseUsageDescription": [
+            {
+              "xml": "<string> Die Ortsbestimmung ermöglicht es, die Umgebung besser festzulegen. </string>",
+              "count": 1
+            }
+          ],
+          "UIBackgroundModes": [
+            {
+              "xml": "<array><string>location</string></array>",
+              "count": 1
+            }
+          ]
         }
       }
     }
@@ -26,11 +66,24 @@
   "installed_plugins": {
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+    },
+    "cordova-plugin-sononetplugin": {
+      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     }
   },
   "dependent_plugins": {},
-  "modules": [],
+  "modules": [
+    {
+      "id": "cordova-plugin-sononetplugin.SonoNetPlugin",
+      "file": "plugins/cordova-plugin-sononetplugin/www/SonoNetPlugin.js",
+      "pluginId": "cordova-plugin-sononetplugin",
+      "clobbers": [
+        "cordova.plugins.SonoNetPlugin"
+      ]
+    }
+  ],
   "plugin_metadata": {
-    "cordova-plugin-whitelist": "1.3.4"
+    "cordova-plugin-whitelist": "1.3.4",
+    "cordova-plugin-sononetplugin": "0.0.1"
   }
 }

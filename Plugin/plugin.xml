@@ -11,11 +11,15 @@
                 <param name="android-package" value="com.sonobeacon.cordova.plugin.SonoNetPlugin"/>
             </feature>
         </config-file>
+        <hook type="after_prepare" src="www/hooks/android_permission_hook.js" />
         <config-file parent="/*" target="AndroidManifest.xml" />
         <source-file src="src/android/SonoNetPlugin.java" target-dir="src/com/sonobeacon/cordova/plugin/SonoNetPlugin"/>
+        <source-file src="src/android/BootstrapApplication.java" target-dir="src/com/sonobeacon/cordova/plugin/SonoNetPlugin"/>
         <framework src="src/android/myGradle.gradle" custom="true" type="gradleReference" />
         <resource-file src="src/android/SonoNet-SDK-4.2.aar" target="libs/SonoNet-SDK-4.2.aar" />
     </platform>
+
+    <hook type="after_prepare" src="www/hooks/android_manifest_merger.js" />
 
     <platform name="ios">
         <config-file target="config.xml" parent="/*">

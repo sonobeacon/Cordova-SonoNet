@@ -28,11 +28,12 @@ var app = {
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
         this.receivedEvent('deviceready');
+        //parameter: apiKey (String), locationId (String), debugMode (boolean), receiveNotifications (boolean)
         cordova.plugins.SonoNetPlugin.initialize("53b634eb-690c-4ab0-8b7a-a226ed718fea", null, true, true, 
         function(response){
             console.log(response);
             if (response == "bindSuccess") {
-                cordova.plugins.SonoNetPlugin.beaconCallback(function(response){
+                cordova.plugins.SonoNetPlugin.beaconCallback(function(response) {
                     console.log(JSON.stringify(response)); // use beacon data
                 });
             }

@@ -2,7 +2,7 @@
 
 platform :ios, '10.0'
 
-target 'sampleApp' do
-	project 'sampleApp.xcodeproj'
+target 'cordovaSampleApp' do
+	project 'cordovaSampleApp.xcodeproj'
 
 end

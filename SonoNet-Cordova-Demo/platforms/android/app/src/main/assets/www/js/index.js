@@ -28,7 +28,7 @@ var app = {
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
         this.receivedEvent('deviceready');
-        cordova.plugins.SonoNetPlugin.initialize("53b634eb-690c-4ab0-8b7a-a226ed718fea", null, true, true, 
+        cordova.plugins.SonoNetPlugin.initialize("ApiKey", "locationId", "debugMode", "receiveNotification", 
         function(response){
             console.log(response);
             if (response == "bindSuccess") {
