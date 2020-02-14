@@ -19,7 +19,7 @@ where '../plugin/' is the relative path from your app to the plugin's location.
 ### Call the Plugin from your index.js
 ```javascript
 //Example: cordova.plugins.SonoNetPlugin.initialize("1234", null, true, true, ... 
-cordova.plugins.SonoNetPlugin.initialize("ApiKey", "locationId", "debugMode", "receiveNotification", 
+cordova.plugins.SonoNetPlugin.initialize("apiKey", "locationId", "debugMode", "receiveNotification", 
         function(response){
             console.log(response);
             if (response == "bindSuccess") {
@@ -32,12 +32,12 @@ cordova.plugins.SonoNetPlugin.initialize("ApiKey", "locationId", "debugMode", "r
         });
 ```
 
-| Parameter            | type    | explanation                                               |
-|----------------------|---------|-----------------------------------------------------------|
-| ApiKey               | String  | your apiKey (mandatory)                                   |
-| locationId           | String  | your locationId (optional)                                |
-| debugMode            | boolean | whether you want the api to put out debugging information |
-| reveiceNotifications | boolean | whether you want to receive notifications from geofences  |
+| Parameter            | type    | explanation                                               			|
+|----------------------|---------|------------------------------------------------------------------------------|
+| apiKey               | String  | your apiKey (mandatory)                                   			|
+| locationId           | String  | your locationId (optional)                      		                |
+| debugMode            | boolean | whether you want the api to put out debugging information 			|
+| receiveNotifications | boolean | whether you want to receive notifications from geofences and ble devices     |
 
 Within the *response* function, process the obtained data according to your needs. The object *response* is a JSON containing the id, title and url of the beacon that was just detected.
 
@@ -49,7 +49,7 @@ in Xcode under Targets -> Signing & Capabilities, check 'Location Updates' under
 
 **Hint:** Background Mode may have to be added if not already in use by selecting '+ Capabilities'.
 
-Then under Build Settings -> Swift Compiler - Language, set *Swift Language Version* to Swift 4.
+If under Build Settings -> Swift Compiler - Language, the *Swift Language Version* is set to **undefined**, select one of the drop down choices.
 
 ### Android
 
