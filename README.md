@@ -134,3 +134,4 @@ You also need to modify your AndroidManifest file by adding following service an
   </application>
 </manifest>
 ```
+If you are experiencing difficulties with the hook script adding the permissions, refer to the README from v1.0.0 branch.
