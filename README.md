@@ -10,16 +10,27 @@ We will provide you with the apiKey that you need to use this plugin.
 
 The Demo app provides a simple template as an enviroment to test and troubleshoot the plugin.
 
-### Usage:
+### Usage
 
 - Clone the repo
 - create the platform you want to use (iOS / Android) with 'cordova platform add ios/android'
-- follow the installation instructions below to add the plugin to the app. 
+- follow the installation instructions below to add the plugin to the app.
 
 The index.js file in the www folder has been set up for the plugin to start on app startup. Simply fill in your ApiKey.
 
-## Installation
+## Content
 
+Content is managed in [the Backend](https://www.app2.sonobeacon.com/sonosystem). Here customers have the ability to set up geofences, bluetooth beacons and sonobeacons in an easy and straight forward way.
+
+## Bluetooth and Geofence Events
+
+The plugin does not forward any events regarding bluetooth beacons and geofences back up to the js level. They are being handled internally.
+
+Push-Notifications are shown when app is **not** in forground, that is in background or terminated.
+
+Entry- & Exit-Urls are called regardless of appState. The calls made are POST-request with the metadata like bluetoothId, location and push notification as a body in JSON.
+
+## Installation
 
 Add the plugin to your existing cordova app
 
@@ -35,8 +46,8 @@ cordova plugin add ../plugin/
 
 ### Call the Plugin from your index.js
 ```javascript
-//Example: cordova.plugins.SonoNetPlugin.initialize("1234", null, true, true, ... 
-cordova.plugins.SonoNetPlugin.initialize("ApiKey", "locationId", "debugMode", "receiveNotification", 
+//Example: cordova.plugins.SonoNetPlugin.initialize("1234", null, true, true, ...
+cordova.plugins.SonoNetPlugin.initialize("ApiKey", "locationId", "debugMode", "receiveNotification",
         function(response){
             console.log(response);
             if (response == "bindSuccess") {
@@ -49,12 +60,12 @@ cordova.plugins.SonoNetPlugin.initialize("ApiKey", "locationId", "debugMode", "r
         });
 ```
 
-| Parameter            | type    | explanation                                               |
-|----------------------|---------|-----------------------------------------------------------|
-| ApiKey               | String  | your apiKey (mandatory)                                   |
-| locationId           | String  | your locationId (optional)                                |
-| debugMode            | boolean | whether you want the api to put out debugging information |
-| reveiceNotifications | boolean | whether you want to receive notifications from geofences  |
+| Parameter            | type    | explanation                                                                   |
+|----------------------|---------|-------------------------------------------------------------------------------|
+| ApiKey               | String  | your apiKey (mandatory)                                                       |
+| locationId           | String  | your locationId (optional)                                                    |
+| debugMode            | boolean | whether you want the api to log debugging information in the console          |
+| reveiceNotifications | boolean | whether you want to receive notifications from geofences and bluetooth beacons|
 
 Within the *response* function, process the obtained data according to your needs. The object *response* is a JSON containing the id, title and url of the beacon that was just detected.
 
@@ -76,7 +87,7 @@ In your project-level build.gradle, add the kotlin verion number and classpath l
 ```gradle
 buildscript {
   ext.kotlin_version = '1.3.30'
-  repositories { 
+  repositories {
   	..
   }
   dependencies {
@@ -119,7 +130,7 @@ dependencies {
     // SUB-PROJECT DEPENDENCIES START
     ..
     // SUB-PROJECT DEPENDENCIES END
-    
+
 }
 ```
 
@@ -151,4 +162,6 @@ You also need to modify your AndroidManifest file by adding following service an
 
 If done correctly, the BootstrapApplication class should be registered in AndroidManifest.xml as the Application class. When encountering issues, first check that this is indeed the case.
 
-If you are experiencing difficulties with the hook script adding the permissions, refer to the README from v1.0.0 branch.
+If your app has its own Application class, copy and paste the contents of the [plugin's class](Plugin/src/android/BootstrapApplication.java) into yours.
+
+If you are experiencing difficulties with the hook script adding the permissions, refer to the README from branch v1.0.0.
