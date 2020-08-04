@@ -1,4 +1,4 @@
-repositories{    
+repositories{
   jcenter()
   flatDir {
       dirs 'src/main/libs'
@@ -6,7 +6,7 @@ repositories{
 }
 
 dependencies {
-   compile(name:'SonoNet-SDK-4.2', ext:'aar')
+   compile(name:'SonoNet-SDK-4.3', ext:'aar')
 }
 
 android {
