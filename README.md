@@ -118,11 +118,14 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.0.0'
-    implementation 'org.altbeacon:android-beacon-library:2.15.1'
     implementation 'androidx.room:room-runtime:2.2.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation "androidx.core:core-ktx:1.0.1"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0'
+    implementation 'androidx.room:room-runtime:2.2.5'
+    implementation 'androidx.room:room-ktx:2.2.5'
     // SUB-PROJECT DEPENDENCIES START
     ..
     // SUB-PROJECT DEPENDENCIES END
