@@ -20,17 +20,21 @@ public class SonoNetPlugin extends CordovaPlugin implements SonoNet.BeaconInfoDe
 	Context context;
 	CallbackContext initCallbackContext;
 	CallbackContext beaconCallbackContext;
-	boolean isDebugging;
-	boolean notifyMe;
+	CallbackContext regionCallbackContext;
+	boolean isDebugging = true;
+	boolean notifyMe = true;
+	boolean bluetoothOnly = false;
 
 	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+		Log.e("ACTION", action);
 		switch (action) {
 			case "initialize":
 				String apiKey = args.getString(0);
 				String locationId = args.getString(1);
 				isDebugging = args.getBoolean(2);
 				notifyMe = args.getBoolean(3);
+				bluetoothOnly = args.getBoolean(4);
 				if (locationId.equals("null")) locationId = null;
 				this.initialize(apiKey, locationId, callbackContext);
 				return true;
@@ -55,7 +59,7 @@ public class SonoNetPlugin extends CordovaPlugin implements SonoNet.BeaconInfoDe
 
         //SonoNet might already be initialized
 		try {
-			SonoNet.initialize(context, credentials);
+			SonoNet.Companion.initialize(context, credentials);
 
 			if (apiKey == null || apiKey.length() <= 0) {
 				initCallbackContext.error("ApiKey must be provided");
@@ -73,13 +77,14 @@ public class SonoNetPlugin extends CordovaPlugin implements SonoNet.BeaconInfoDe
 		}
 	}
 
-
 	private void bind() {
-		SonoNet.Control control = new SonoNet.Control.Builder(context)
-        // SonoNet.Control control = new SonoNet.Control.Builder(context)
-		.isDebugging(isDebugging)
-		.notifyMe(notifyMe)
-		.build();
+		SonoNet.Control control = new SonoNet.Control(
+		context,
+		null,			//contentView
+		false,			//with menu
+		isDebugging,	//debugMode
+		notifyMe,		//notifications
+		bluetoothOnly);	//bluetoothOnlyMode
 
 		control.bind(this);
 		PluginResult result = new PluginResult(PluginResult.Status.OK, "bindSuccess");
@@ -105,7 +110,7 @@ public class SonoNetPlugin extends CordovaPlugin implements SonoNet.BeaconInfoDe
 			jsonObject.put("url", webLink.getUrl());
 			jsonObject.put("title", webLink.getTitle());
 		} catch (JSONException e) {
-			Log.e("JSON", e.getMessage());
+			Log.i("JSON", e.getMessage());
 		}
 		PluginResult result = new PluginResult(PluginResult.Status.OK, jsonObject);
 		result.setKeepCallback(true);
