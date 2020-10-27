@@ -145,7 +145,7 @@ You also need to modify your AndroidManifest file by adding following service an
 	...
   <application>
     ...
-    <service android:label="dacDetect" android:name="com.sonobeacon.system.sonolib.BeaconInfoService" />
+    <service android:label="dacDetect" android:name="com.sonobeacon.system.sonolib.BeaconService" />
     <receiver
       android:name="com.sonobeacon.system.sonolib.GeofenceBroadcastReceiver"
       android:enabled="true"
