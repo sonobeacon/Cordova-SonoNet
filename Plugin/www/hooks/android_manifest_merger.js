@@ -8,7 +8,7 @@ module.exports = function(context) {
 
   var platformRoot = path.join(context.opts.projectRoot, 'platforms/android');
   var manifestFile = path.join(platformRoot, 'app/src/main/AndroidManifest.xml');
-  
+
   if (fs.existsSync(manifestFile)) {
     fs.readFile(manifestFile, 'utf8', function (err, data) {
       if (err) {
@@ -22,6 +22,6 @@ module.exports = function(context) {
         })
       }
     });
-  } 
+  }
 
 };

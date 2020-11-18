@@ -20,15 +20,29 @@ The index.js file in the www folder has been set up for the plugin to start on a
 
 ## Content
 
-Content is managed in [the Backend](https://www.app2.sonobeacon.com/sonosystem). Here customers have the ability to set up geofences, bluetooth beacons and sonobeacons in an easy and straight forward way.
+Content is managed in [the Backend](https://www.admin.sonobeacon.com/). Here customers have the ability to set up geofences, bluetooth beacons and sonobeacons in an easy and straight forward way.
 
 ## Bluetooth and Geofence Events
 
-The plugin does not forward any events regarding bluetooth beacons and geofences back up to the js level. They are being handled internally.
+Events regarding bluetooth and geofences are now passed back up to the js level as json. They have the following syntax:
 
-Push-Notifications are shown when app is **not** in forground, that is in background or terminated.
+```javascript
+//BLE
+{
+  "enterOrExit" : "ENTER/EXIT",
+  "bleId" : "BLEID"
+}
+//GEOFENCE
+{
+  "enterOrExit" : "ENTER/EXIT",
+  "lat" : "LAT",
+  "long" : "LONG"
+}
+```
 
-Entry- & Exit-Urls are called regardless of appState. The calls made are POST-request with the metadata like bluetoothId, location and push notification as a body in JSON.
+Push-Notifications are shown when app is **not** in forground (iOS only, Android will show them even when app is in use), that is in background or terminated.
+
+Entry- & Exit-Urls are called regardless of appState. The calls made are GET-request.
 
 ## Installation
 
@@ -41,14 +55,17 @@ where '../plugin/' is the relative path from your app to the plugin's location.
 
 ### Call the Plugin from your index.js
 ```javascript
-//Example: cordova.plugins.SonoNetPlugin.initialize("1234", null, true, true, true, ...
-cordova.plugins.SonoNetPlugin.initialize("ApiKey", "locationId", "debugMode", "receiveNotification", "bluetoothOnly",
+//Example: cordova.plugins.SonoNetPlugin.initialize("1234", true, true, true, ...
+cordova.plugins.SonoNetPlugin.initialize("APIKEY", true, true, true,
         function(response){
             console.log(response);
             if (response == "bindSuccess") {
-                cordova.plugins.SonoNetPlugin.beaconCallback(function(response){
+                cordova.plugins.SonoNetPlugin.beaconCallback(function(response) {
                     console.log(JSON.stringify(response)); // use beacon data
                 });
+                cordova.plugins.SonoNetPlugin.eventCallback(function(response) {
+                    console.log(JSON.stringify(response)); // use event data
+                })
             }
         }, function(error){
             console.log(error);
@@ -58,7 +75,6 @@ cordova.plugins.SonoNetPlugin.initialize("ApiKey", "locationId", "debugMode", "r
 | Parameter            | type    | explanation                                                                   |
 |----------------------|---------|-------------------------------------------------------------------------------|
 | ApiKey               | String  | your apiKey (mandatory)                                                       |
-| locationId           | String  | your locationId (optional)                                                    |
 | debugMode            | boolean | whether you want the api to log debugging information in the console          |
 | reveiceNotifications | boolean | whether you want to receive notifications from geofences and bluetooth beacons|
 | bluetoothOnly        | boolean | whether you want to use ultrasound detection or just bluetooth tracking       |
@@ -115,17 +131,18 @@ apply plugin: 'kotlin-android-extensions'
 Still in your app-level build.gradle, add the following dependencies:
 ```gradle
 dependencies {
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'androidx.room:room-runtime:2.2.0'
-    implementation 'com.google.android.gms:play-services-location:17.0.0'
-    implementation "androidx.core:core-ktx:1.0.1"
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.room:room-runtime:2.2.5'
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
+    implementation "androidx.core:core-ktx:1.3.2"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0'
     implementation 'androidx.room:room-runtime:2.2.5'
     implementation 'androidx.room:room-ktx:2.2.5'
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
     // SUB-PROJECT DEPENDENCIES START
     ..
     // SUB-PROJECT DEPENDENCIES END
@@ -139,20 +156,20 @@ android.useAndroidX=true
 android.enableJetifier=true
 ```
 
-You also need to modify your AndroidManifest file by adding following service and receiver, v1.1.0 adds the needed permissions automatically:
+You also need to modify your AndroidManifest file by adding following service and receiver, v1.1.0 adds the needed permissions automatically. Below are the changes you need to do by hand:
 ```xml
 <manifest>
 	...
   <application>
     ...
-    <service android:label="dacDetect" android:name="com.sonobeacon.system.sonolib.BeaconInfoService" />
+    <service android:label="dacDetect" android:name="com.sonobeacon.system.sonolib.core.BeaconInfoService" />
     <receiver
-      android:name="com.sonobeacon.system.sonolib.GeofenceBroadcastReceiver"
+      android:name="com.sonobeacon.system.sonolib.location.GeofenceBroadcastReceiver"
       android:enabled="true"
       android:exported="true" />
 
     <service
-      android:name="com.sonobeacon.system.sonolib.GeofenceTransitionsJobIntentService"
+      android:name="com.sonobeacon.system.sonolib.location.GeofenceTransitionsJobIntentService"
       android:exported="true"
       android:permission="android.permission.BIND_JOB_SERVICE" />
   </application>

@@ -6,7 +6,7 @@ repositories{
 }
 
 dependencies {
-   compile(name:'SonoNet-SDK-4.3', ext:'aar')
+   compile(name:'SonoNetSDK-5.3.0', ext:'aar')
 }
 
 android {

@@ -1,6 +1,9 @@
 Changelog
 =====================
 
+## 1.3.0 (November 2020)
+Support new backend, send region events back up to the javcascript level.
+
 ## 1.2.0 (August 2020)
 the [all new backend](https://www.app2.sonobeacon.com/sonosystem/) is now supported, plugin can call tracking urls and show notifications for both ble and geofence events. Ultrasound detection can be turned off entirely.
 

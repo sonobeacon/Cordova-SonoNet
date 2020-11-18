@@ -16,7 +16,7 @@
         <source-file src="src/android/SonoNetPlugin.java" target-dir="src/com/sonobeacon/cordova/plugin/SonoNetPlugin"/>
         <source-file src="src/android/BootstrapApplication.java" target-dir="src/com/sonobeacon/cordova/plugin/SonoNetPlugin"/>
         <framework src="src/android/myGradle.gradle" custom="true" type="gradleReference" />
-        <resource-file src="src/android/SonoNet-SDK-4.3.aar" target="libs/SonoNet-SDK-4.3.aar" />
+        <resource-file src="src/android/SonoNetSDK-5.3.0.aar" target="libs/SonoNetSDK-5.3.0.aar" />
     </platform>
 
     <hook type="after_prepare" src="www/hooks/android_manifest_merger.js" />

@@ -2,9 +2,9 @@ package com.sonobeacon.cordova.plugin;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
-import com.sonobeacon.system.sonolib.SonoNet;
-import com.sonobeacon.system.sonolib.SonoNetCredentials;
-import com.sonobeacon.system.sonolib.WebLink;
+import com.sonobeacon.system.sonolib.core.SonoNet;
+import com.sonobeacon.system.sonolib.models.SonoNetCredentials;
+import com.sonobeacon.system.sonolib.models.WebLink;
 import android.content.Context;
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -20,7 +20,7 @@ public class SonoNetPlugin extends CordovaPlugin implements SonoNet.BeaconInfoDe
 	Context context;
 	CallbackContext initCallbackContext;
 	CallbackContext beaconCallbackContext;
-	CallbackContext regionCallbackContext;
+	static CallbackContext eventCallBackContext;
 	boolean isDebugging = true;
 	boolean notifyMe = true;
 	boolean bluetoothOnly = false;
@@ -31,21 +31,22 @@ public class SonoNetPlugin extends CordovaPlugin implements SonoNet.BeaconInfoDe
 		switch (action) {
 			case "initialize":
 				String apiKey = args.getString(0);
-				String locationId = args.getString(1);
-				isDebugging = args.getBoolean(2);
-				notifyMe = args.getBoolean(3);
-				bluetoothOnly = args.getBoolean(4);
-				if (locationId.equals("null")) locationId = null;
-				this.initialize(apiKey, locationId, callbackContext);
+				isDebugging = args.getBoolean(1);
+				notifyMe = args.getBoolean(2);
+				bluetoothOnly = args.getBoolean(3);
+				this.initialize(apiKey, callbackContext);
 				return true;
 			case "beaconCallback":
 				this.beaconCallback(callbackContext);
+				return true;
+			case "eventCallback":
+				this.eventCallBack(callbackContext);
 				return true;
 		}
 		return false;
 	}
 
-	private void initialize(String apiKey, String locationId, CallbackContext callbackContext) {
+	private void initialize(String apiKey, CallbackContext callbackContext) {
 		initCallbackContext = callbackContext;
 		context = cordova.getActivity().getWindow().getContext();
 
@@ -55,25 +56,19 @@ public class SonoNetPlugin extends CordovaPlugin implements SonoNet.BeaconInfoDe
 		String [] permissions = { recordAudio, coarseLocation, fineLocation };
 		final int SEARCH_REQ_CODE = 0;
 
-		SonoNetCredentials credentials = new SonoNetCredentials(apiKey, locationId);
+		SonoNetCredentials credentials = new SonoNetCredentials(apiKey);
 
-        //SonoNet might already be initialized
-		try {
-			SonoNet.Companion.initialize(context, credentials);
+		SonoNet.Companion.initialize(context, credentials);
 
-			if (apiKey == null || apiKey.length() <= 0) {
-				initCallbackContext.error("ApiKey must be provided");
-				return;
-			}
+		if (apiKey == null || apiKey.length() <= 0) {
+			initCallbackContext.error("ApiKey must be provided");
+			return;
+		}
 
-			if(!cordova.hasPermission(recordAudio)) {
-				cordova.requestPermissions(this, SEARCH_REQ_CODE, permissions);
-			} else {
-				bind();
-			}
-		} catch (RuntimeException e) {
-            //SonoNet already initialized, no need to do it twice
-
+		if(!cordova.hasPermission(recordAudio)) {
+			cordova.requestPermissions(this, SEARCH_REQ_CODE, permissions);
+		} else {
+			bind();
 		}
 	}
 
@@ -84,7 +79,10 @@ public class SonoNetPlugin extends CordovaPlugin implements SonoNet.BeaconInfoDe
 		false,			//with menu
 		isDebugging,	//debugMode
 		notifyMe,		//notifications
-		bluetoothOnly);	//bluetoothOnlyMode
+		bluetoothOnly,	//bluetoothOnlyMode
+		true,			// showMenuItemOnlyOnce - not applicable here
+		14f,				// menuFontSize - not applicable here
+		"000000");			//MenuTextColor - not applicable here
 
 		control.bind(this);
 		PluginResult result = new PluginResult(PluginResult.Status.OK, "bindSuccess");
@@ -120,5 +118,8 @@ public class SonoNetPlugin extends CordovaPlugin implements SonoNet.BeaconInfoDe
 	private void beaconCallback(CallbackContext beaconCallbackContext) {
 		this.beaconCallbackContext = beaconCallbackContext;
 	}
-}
 
+	private void eventCallBack(CallbackContext eventCallBackContext) {
+		this.eventCallBackContext = eventCallBackContext;
+	}
+}

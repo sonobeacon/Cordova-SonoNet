@@ -10,17 +10,20 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.util.Log;
-import com.sonobeacon.system.sonolib.SonoNet;
+
+import com.sonobeacon.system.sonolib.core.OnCompletionListener;
+import com.sonobeacon.system.sonolib.core.SonoNet;
+
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.Region;
 import org.altbeacon.beacon.service.RunningAverageRssiFilter;
 import org.altbeacon.beacon.startup.BootstrapNotifier;
 import org.altbeacon.beacon.startup.RegionBootstrap;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.PluginResult;
 
-public class BootstrapApplication extends Application implements BootstrapNotifier {
+public class BootstrapApplication extends Application implements BootstrapNotifier, OnCompletionListener {
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -36,8 +39,6 @@ public class BootstrapApplication extends Application implements BootstrapNotifi
         IntentFilter filter = new IntentFilter();
         filter.addAction("ENTER");
         filter.addAction("EXIT");
-        filter.addAction("ble_enter");
-        filter.addAction("ble_exit");
         registerReceiver(receiver, filter);
 
 
@@ -61,24 +62,45 @@ public class BootstrapApplication extends Application implements BootstrapNotifi
         beaconmanager.setEnableScheduledScanJobs(false);
         beaconmanager.setBackgroundBetweenScanPeriod(0);
         beaconmanager.setBackgroundScanPeriod(1100);
-        Region region = new Region("region", null, null, null);
+        Region region = new Region("default region", null, null, null);
         new RegionBootstrap(this, region);
     }
 
-    public void fireEvent(String enterAction, String id) {
+    void fireEvent(String enterAction, String id) {
         SonoNet.Companion.regionEvent(this, enterAction, id);
+        SonoNet.Companion.formatRegionInformationToJson(this, id, enterAction, this);
+    }
+
+    @Override
+    public void onComplete(String resultJson) {
+        sendCallback(resultJson);
+    }
+
+    void sendCallback(String json) {
+        CallbackContext context = SonoNetPlugin.eventCallBackContext;
+        if (context != null) {
+            PluginResult result = new PluginResult(PluginResult.Status.OK, json);
+            result.setKeepCallback(true);
+            context.sendPluginResult(result);
+        }
     }
 
     @Override
     public void didEnterRegion(Region region) {
-        SonoNet.Companion.regionEvent(this, "ENTER", region.getUniqueId());
-        Log.d("RegionBootstrap", "didEnterRegion: " + region.getUniqueId());
+        if (!region.getUniqueId().equals("default region")) {
+            SonoNet.Companion.regionEvent(this, "ENTER", region.getUniqueId());
+            Log.d("RegionBootstrap", "didEnterRegion: " + region.getUniqueId());
+            SonoNet.Companion.formatRegionInformationToJson(this, "ENTER", region.getUniqueId(), this);
+        }
     }
 
     @Override
     public void didExitRegion(Region region) {
-        SonoNet.Companion.regionEvent(this, "EXIT", region.getUniqueId());
-        Log.d("RegionBootstrap", "didExitRegion: " + region.getUniqueId());
+        if (!region.getUniqueId().equals("default region")) {
+            SonoNet.Companion.regionEvent(this, "EXIT", region.getUniqueId());
+            Log.d("RegionBootstrap", "didExitRegion: " + region.getUniqueId());
+            SonoNet.Companion.formatRegionInformationToJson(this, "EXIT", region.getUniqueId(), this);
+        }
     }
 
     @Override
