@@ -41,7 +41,6 @@ public class BootstrapApplication extends Application implements BootstrapNotifi
         filter.addAction("EXIT");
         registerReceiver(receiver, filter);
 
-
         BeaconManager beaconmanager = BeaconManager.getInstanceForApplication(this);
         beaconmanager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
         Notification.Builder builder = new Notification.Builder(this);
@@ -88,18 +87,18 @@ public class BootstrapApplication extends Application implements BootstrapNotifi
     @Override
     public void didEnterRegion(Region region) {
         if (!region.getUniqueId().equals("default region")) {
-            SonoNet.Companion.regionEvent(this, "ENTER", region.getUniqueId());
             Log.d("RegionBootstrap", "didEnterRegion: " + region.getUniqueId());
-            SonoNet.Companion.formatRegionInformationToJson(this, "ENTER", region.getUniqueId(), this);
+            SonoNet.Companion.regionEvent(this, "ENTER", region.getUniqueId());
+            SonoNet.Companion.formatRegionInformationToJson(this, region.getUniqueId(), "ENTER", this);
         }
     }
 
     @Override
     public void didExitRegion(Region region) {
         if (!region.getUniqueId().equals("default region")) {
-            SonoNet.Companion.regionEvent(this, "EXIT", region.getUniqueId());
             Log.d("RegionBootstrap", "didExitRegion: " + region.getUniqueId());
-            SonoNet.Companion.formatRegionInformationToJson(this, "EXIT", region.getUniqueId(), this);
+            SonoNet.Companion.regionEvent(this, "EXIT", region.getUniqueId());
+            SonoNet.Companion.formatRegionInformationToJson(this, region.getUniqueId(), "EXIT", this);
         }
     }
 

@@ -6,7 +6,7 @@ import CoreLocation
 @objc(SonoNetPlugin)
 class SonoNetPlugin: CDVPlugin {
 
-    var eventCallbackId:String = ""
+    var eventCallbackId: String = ""
 
     fileprivate lazy var locationManager: CLLocationManager = {
         let manager = CLLocationManager()
@@ -38,6 +38,7 @@ class SonoNetPlugin: CDVPlugin {
             if let bluetoothOnly: Bool = command.argument(at: 3) as? Bool {
                 builder.bluetoothOnly = bluetoothOnly
             }
+            //builder.initialLocation = ENTER INITIAL LOCATION
         }
 
         guard let sonoNetConfig = SonoNetConfig(config) else { return }

@@ -91,7 +91,7 @@ in Xcode under Targets -> Signing & Capabilities, check 'Location Updates' under
 
 **Hint:** Background Mode may have to be added if not already in use by selecting '+ Capabilities'.
 
-If under Build Settings -> Swift Compiler - Language, the *Swift Language Version* is set to **undefined**, select one of the drop down choices.
+If under Build Settings -> Swift Compiler - Language, the *Swift Language Version* is set to **undefined**, select one of the drop down choices (tested with 5.0).
 
 ### Android
 
@@ -162,7 +162,7 @@ You also need to modify your AndroidManifest file by adding following service an
 	...
   <application>
     ...
-    <service android:label="dacDetect" android:name="com.sonobeacon.system.sonolib.core.BeaconInfoService" />
+    <service android:label="dacDetect" android:name="com.sonobeacon.system.sonolib.core.BeaconService" />
     <receiver
       android:name="com.sonobeacon.system.sonolib.location.GeofenceBroadcastReceiver"
       android:enabled="true"
@@ -181,3 +181,24 @@ If done correctly, the BootstrapApplication class should be registered in Androi
 If your app has its own Application class, copy and paste the contents of the [plugin's class](Plugin/src/android/BootstrapApplication.java) into yours.
 
 If you are experiencing difficulties with the hook script adding the permissions, refer to the README from branch v1.0.0.
+
+## Issues with Capacitor
+
+When using the plugin with capacitor, it is possible that issues occur. Therefore, please check if:
+
+- the following permissions are added to the Manifest
+```
+'android.permission.RECORD_AUDIO',
+'android.permission.INTERNET',
+'android.permission.BLUETOOTH',
+'android.permission.BLUETOOTH_ADMIN',
+'android.permission.ACCESS_COARSE_LOCATION',
+'android.permission.ACCESS_FINE_LOCATION',
+'android.permission.ACCESS_BACKGROUND_LOCATION' // <-- needed from android 10 and up
+```
+- that the Bootstrapapplication app class is registered in the manifest:
+```xml
+<application
+  android:name="com.sonobeacon.cordova.plugin.BootstrapApplication"
+  ...>
+</application>

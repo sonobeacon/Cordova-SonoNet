@@ -27,7 +27,6 @@ public class SonoNetPlugin extends CordovaPlugin implements SonoNet.BeaconInfoDe
 
 	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-		Log.e("ACTION", action);
 		switch (action) {
 			case "initialize":
 				String apiKey = args.getString(0);
@@ -53,7 +52,8 @@ public class SonoNetPlugin extends CordovaPlugin implements SonoNet.BeaconInfoDe
 		final String recordAudio = Manifest.permission.RECORD_AUDIO;
 		final String coarseLocation = Manifest.permission.ACCESS_COARSE_LOCATION;
 		final String fineLocation = Manifest.permission.ACCESS_FINE_LOCATION;
-		String [] permissions = { recordAudio, coarseLocation, fineLocation };
+		final String backgroundLocation = Manifest.permission.ACCESS_BACKGROUND_LOCATION;
+		String [] permissions = { recordAudio, coarseLocation, fineLocation, backgroundLocation };
 		final int SEARCH_REQ_CODE = 0;
 
 		SonoNetCredentials credentials = new SonoNetCredentials(apiKey);
@@ -81,8 +81,8 @@ public class SonoNetPlugin extends CordovaPlugin implements SonoNet.BeaconInfoDe
 		notifyMe,		//notifications
 		bluetoothOnly,	//bluetoothOnlyMode
 		true,			// showMenuItemOnlyOnce - not applicable here
-		14f,				// menuFontSize - not applicable here
-		"000000");			//MenuTextColor - not applicable here
+		14f,			// menuFontSize - not applicable here
+		"000000");		//MenuTextColor - not applicable here
 
 		control.bind(this);
 		PluginResult result = new PluginResult(PluginResult.Status.OK, "bindSuccess");
