@@ -55,8 +55,8 @@ where '../plugin/' is the relative path from your app to the plugin's location.
 
 ### Call the Plugin from your index.js
 ```javascript
-//Example: cordova.plugins.SonoNetPlugin.initialize("1234", true, true, true, ...
-cordova.plugins.SonoNetPlugin.initialize("APIKEY", true, true, true,
+//Example: cordova.plugins.SonoNetPlugin.initialize("1234", true, true, true, "49.234", "9.341", ...
+cordova.plugins.SonoNetPlugin.initialize("APIKEY", true, true, true, "LatAsString", "LngAsString",
         function(response){
             console.log(response);
             if (response == "bindSuccess") {
@@ -78,6 +78,8 @@ cordova.plugins.SonoNetPlugin.initialize("APIKEY", true, true, true,
 | debugMode            | boolean | whether you want the api to log debugging information in the console          |
 | reveiceNotifications | boolean | whether you want to receive notifications from geofences and bluetooth beacons|
 | bluetoothOnly        | boolean | whether you want to use ultrasound detection or just bluetooth tracking       |
+| LatAsString          | String  | lat value for initial location under iOS, pass null if not wanted             |
+| LngAsString          | String  | lng value for initial location under iOS, pass null if not wanted             |
 
 Within the *response* function, process the obtained data according to your needs. The object *response* is a JSON containing the id, title and url of the beacon that was just detected.
 

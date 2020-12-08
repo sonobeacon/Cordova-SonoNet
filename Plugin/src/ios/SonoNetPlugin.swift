@@ -15,7 +15,7 @@ class SonoNetPlugin: CDVPlugin {
         manager.allowsBackgroundLocationUpdates = false
         manager.pausesLocationUpdatesAutomatically = false
         return manager
-        }()
+    }()
 
     @objc(initialize:)
     func initialize(command: CDVInvokedUrlCommand) {
@@ -25,7 +25,7 @@ class SonoNetPlugin: CDVPlugin {
             if let apiKey: String = command.argument(at: 0) as? String {
                 builder.apiKey = apiKey
             } else {
-                let pluginErrorResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: "ApiKey must provided!");
+                let pluginErrorResult = CDVPluginResult (status: CDVCommandStatus_ERROR, messageAs: "ApiKey must be provided!");
                 self.commandDelegate.send(pluginErrorResult, callbackId:command.callbackId)
             }
             if let isDebugging: Bool = command.argument(at: 1) as? Bool {
@@ -38,7 +38,12 @@ class SonoNetPlugin: CDVPlugin {
             if let bluetoothOnly: Bool = command.argument(at: 3) as? Bool {
                 builder.bluetoothOnly = bluetoothOnly
             }
-            //builder.initialLocation = ENTER INITIAL LOCATION
+            if let lat: String = command.argument(at: 4) as? String,
+               let lng: String = command.argument(at: 5) as? String,
+               let latf = Float(lat),
+               let lngf = Float(lng) {
+                builder.initialLocation = [latf, lngf]
+            }
         }
 
         guard let sonoNetConfig = SonoNetConfig(config) else { return }
@@ -86,10 +91,10 @@ class SonoNetPlugin: CDVPlugin {
 
     func buildLocationEvent(lat: Double, lng: Double, enterOrExit: String) {
         let jsonObject: [String: Any] = [
-                "lat": lat,
-                "long": lng,
-                "enterOrExit": enterOrExit
-            ]
+            "lat": lat,
+            "long": lng,
+            "enterOrExit": enterOrExit
+        ]
 
         sendEvent(json: jsonObject)
     }
